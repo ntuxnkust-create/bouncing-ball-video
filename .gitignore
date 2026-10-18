@@ -205,6 +205,11 @@ cython_debug/
 # Temporary file for partial code execution
 tempCodeRunnerFile.py
 
+# Rendered media and transient production output
+output/
+*.mp4
+*.wav
+
 # Ruff stuff:
 .ruff_cache/
 
