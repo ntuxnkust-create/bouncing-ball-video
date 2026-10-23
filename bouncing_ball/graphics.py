@@ -202,7 +202,7 @@ class Renderer:
 
     def _ingest(self, sim):
         for event in sim.events[self.seen_events:]:
-            if event.kind == "hit":
+            if event.kind not in {"merge", "final"}:
                 continue
             self.effects.append(event)
             self.newest_merge = event

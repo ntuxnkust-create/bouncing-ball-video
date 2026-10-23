@@ -28,6 +28,8 @@ class Event:
     y: float
     level: int
     strength: float = 1.0
+    pair: tuple[int, ...] = ()
+    impact: float = 0.0
 
 
 class Simulation:
@@ -45,7 +47,7 @@ class Simulation:
         self.next_spawn = 0.15
         self.events: list[Event] = []
         self.pending: set[tuple[int, int]] = set()
-        self.last_hit: dict[int, float] = {}
+        self.last_hit: dict[tuple, float] = {}
         self.spawned = 0
         self.merges = 0
         self.highest = 0
@@ -105,15 +107,23 @@ class Simulation:
                 and ba.level < len(self.cfg.brands)-1
                 and self.time - max(ba.born, bb.born) >= self.cfg.merge_grace):
             self.pending.add(tuple(sorted((aid, bid))))
-        impact = arbiter.total_impulse.length / max(1, a.body.mass if aid else b.body.mass)
-        key = aid or bid
-        if impact > 65 and self.time - self.last_hit.get(key, -1) > 0.11:
-            self.last_hit[key] = self.time
-            ball = ba or bb
-            if ball:
-                p = ball.body.position
-                self.events.append(Event(self.time, "hit", p.x, p.y, ball.level,
-                                         min(1.0, impact / 550)))
+        # Audio observation only: no impulses, bodies or merge decisions change.
+        dynamic = [ball for ball in (ba, bb) if ball is not None]
+        inverse_mass = sum(1/ball.body.mass for ball in dynamic)
+        impact = arbiter.total_impulse.length * inverse_mass
+        if dynamic and impact >= self.cfg.sound.minimum_impact:
+            kind = "ball" if ba and bb else "wall"
+            pair = tuple(sorted(ball.id for ball in dynamic))
+            key = (kind, pair)
+            when = self.time + 1/self.cfg.physics_hz
+            if when-self.last_hit.get(key, -1) >= self.cfg.sound.pair_cooldown:
+                self.last_hit[key] = when
+                points = arbiter.contact_point_set.points
+                p = ((points[0].point_a + points[0].point_b)/2 if points
+                     else dynamic[0].body.position)
+                strength = min(1.0, impact/self.cfg.sound.full_impact)
+                self.events.append(Event(when, kind, p.x, p.y,
+                                         max(ball.level for ball in dynamic), strength, pair, impact))
 
     def _merge(self):
         for aid, bid in sorted(self.pending):
@@ -134,7 +144,9 @@ class Simulation:
             for ball in (a, b):
                 self.space.remove(ball.shape, ball.body)
                 del self.balls[ball.id]
-                self.last_hit.pop(ball.id, None)
+                for key in tuple(self.last_hit):
+                    if ball.id in key[1]:
+                        self.last_hit.pop(key)
             merged = self.add_ball(level, position, velocity, (a.body.angle+b.body.angle)/2)
             merged.body.angular_velocity = spin
             self.merges += 1
