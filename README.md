@@ -124,4 +124,4 @@ scripts/setup.sh              可重複執行的安裝腳本
 
 ## Space Emoji Merge 獨立主題
 
-新增的宇宙 Emoji／玻璃容器版本見 [SPACE_EMOJI.md](SPACE_EMOJI.md)。使用 `.venv/bin/python -m space_emoji`，不影響以上汽車版本。正式背景必須是使用者提供的 PNG 原檔；目前尚缺可讀取的原圖，因此正式影片與實際圖片對位驗證尚未完成。
+新增的宇宙 Emoji／玻璃容器版本見 [SPACE_EMOJI.md](SPACE_EMOJI.md)。使用 `.venv/bin/python -m space_emoji`，不影響以上汽車版本。正式背景使用已上傳的原始 PNG，原樣保存在 `assets/glass-container.png`。已依原圖校正內壁邊界；正式 30 秒影片與下載連結見 [downloads/space-emoji/](downloads/space-emoji/)。

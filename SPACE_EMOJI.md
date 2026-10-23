@@ -2,7 +2,9 @@
 
 獨立的宇宙 Emoji 合併影片產生器。原有汽車版本 `main.py`、`config.py` 與 `bouncing_ball/` 保留原樣；新主題使用 `space_emoji/`，沿用原有碰撞事件音效與 MP4 驗證器。
 
-**目前交付狀態：程式已建立，但對話中的背景圖片未以可讀取附件提供給雲端。`assets/glass-container.png` 尚缺，因此沒有正式 MP4，也尚未完成圖片內壁的實際對位驗證。不能將此版本稱為完成的影片。** `assets/glass-container.geometry.json` 是依對話可見參考圖建立的初始內壁描線，`reference_registration` 明確標示 `pending-original-png`。正式製作必須先取得原始 PNG，檢查及微調描線。
+正式背景是使用者上傳的根目錄 `霓虹玻璃实验烧瓶.png`（941 × 1672），已逐位元組原樣複製到 `assets/glass-container.png`。兩份檔案 SHA-256 相同。內壁描線已依原始 PNG 校正，保存在 `assets/glass-container.geometry.json`，包含原圖雜湊、尺寸及縮放座標對照；入口完全開放。
+
+正式成品、最新原始碼 ZIP 與驗證報告見 [`downloads/space-emoji/`](downloads/space-emoji/)。
 
 ## 安裝與執行
 
@@ -10,8 +12,8 @@ Python 3.12、FFmpeg / FFprobe（`libx264`、`aac`）與 DejaVu Sans 字型。Li
 
 ```bash
 bash scripts/setup.sh
-# 原圖可讀取後，實際保存到 assets，並啟動正式渲染：
-.venv/bin/python -m space_emoji --import-background /path/to/original.png
+# 已提交正式背景；直接啟動完整 30 秒渲染：
+.venv/bin/python -m space_emoji
 ```
 
 已在 `assets/glass-container.png` 保存原圖後：
@@ -27,14 +29,14 @@ bash scripts/setup.sh
 - 不生成、不重畫容器；以原始 PNG 當底圖，保留顏色、黑底、發光及連續導軌。
 - 原檔整體等比例放入 1080 × 1920，絕不裁切或拉伸。原檔不改寫。
 - 物理邊界為一條從左導軌繞過球形底部接到右導軌的連續折線；**不閉合入口、不放橫向碰撞線**。
-- JSON 使用全畫面標準化座標，只保存左內壁；右側鏡射產生。若取得原檔後發現左右非對稱，需將幾何擴充為完整描線。
+- JSON 保存全畫面標準化左內壁座標，依原圖玻璃軸線（來源 x=468.5 px）鏡射到右側；保留原圖稍微偏離畫面中央的實際位置。
 - 對位檢查圖是獨立診斷輸出，絕不混入正式畫面：
 
 ```bash
 .venv/bin/python -m space_emoji --calibrate /tmp/glass-collision-overlay.png
 ```
 
-需根據原圖確認所有點位落在**內壁**，包含入口轉彎及底部；完成檢查後更新 JSON 的 `reference_registration` 紀錄。原圖欠缺時，渲染器明確失敗，不偷偷替換背景。
+已實際檢查**內壁**描線、入口轉彎及瓶底；`reference_registration` 為 `calibrated-original-png`。校正圖可在下載資料夾查看，僅供診斷，不會混入影片。原圖欠缺時，渲染器仍會明確失敗。
 
 ## 模擬與視覺
 
@@ -63,6 +65,6 @@ Pymunk 固定 240 Hz，30 FPS 每影格八個子步進。只有相同等級真�
 
 ## 本次實測結果
 
-種子 42、投放間隔 0.40 秒：完整 900 影格物理模擬投放 **73 顆**、完成 **38 次合併**，首次火箭為 **25.1875 秒**。音軌保留 **429 個**事件聲音（67 撞壁、324 球碰撞、37 一般升級、1 次最終升級），峰值 0.518，最多同時 7 個聲部。30 項自動測試全數通過，包括原汽車版本回歸、完整 30 秒新主題模擬及短片 H.264/AAC 編解碼。
+校正後維持種子 42、投放間隔 0.40 秒與原有同步碰撞音效。完整 900 影格模擬投放 **73 顆**、完成 **44 次合併**，首次火箭為 **24.975 秒**。銀河與火箭均由真實同級碰撞合併產生。沒有新增背景音樂或人聲。
 
-這些結果僅證明模擬、音效及編碼管線；玻璃原檔仍缺，**正式 1080 × 1920／30 秒 MP4 的影格與畫面驗證尚未執行**。正式渲染指令已實際嘗試，因缺少原始 PNG 以退出碼 1 結束。
+完整影音規格、解碼結果及當次音效統計以下載資料夾中的 `emoji-space-merge.report.json` 為準；自動測試紀錄見 `test-results.txt`。

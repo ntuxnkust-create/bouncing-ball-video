@@ -18,6 +18,15 @@ from space_emoji.simulation import SpaceSimulation
 
 
 class GeometryTests(unittest.TestCase):
+    def test_calibration_matches_untouched_original_png(self):
+        spec = json.loads(SpaceConfig.geometry.read_text())
+        original = ROOT/spec['source_filename']
+        stored = SpaceConfig.background
+        self.assertEqual(original.read_bytes(), stored.read_bytes())
+        self.assertEqual(hashlib.sha256(stored.read_bytes()).hexdigest(), spec['source_sha256'])
+        self.assertEqual(list(Image.open(stored).size), spec['source_size'])
+        self.assertEqual(spec['reference_registration'], 'calibrated-original-png')
+
     def test_open_inlet_and_clearance(self):
         geo = GlassGeometry(SpaceConfig.geometry)
         self.assertTrue(geo.contains((540, 100)))

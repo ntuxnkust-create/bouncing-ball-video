@@ -11,10 +11,11 @@ class GlassGeometry:
     def __init__(self, path):
         self.spec = json.loads(Path(path).read_text())
         left = self.spec['left_inner_wall']
-        if len(left) < 4 or left[-1][0] != .5:
+        center = self.spec.get('mirror_center_x', .5)
+        if len(left) < 4 or abs(left[-1][0]-center) > 1e-8:
             raise ValueError('Trace must end at the bottom center')
         self.points = [pymunk.Vec2d(x*1080, y*1920) for x, y in left]
-        self.points += [pymunk.Vec2d((1-x)*1080, y*1920) for x, y in reversed(left[:-1])]
+        self.points += [pymunk.Vec2d((2*center-x)*1080, y*1920) for x, y in reversed(left[:-1])]
         # Closed only for point-in-polygon queries; never made into a physics lid.
         self.polygon = self.points
         self.segments = list(zip(self.points, self.points[1:]))
