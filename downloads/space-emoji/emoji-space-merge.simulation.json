@@ -36,7 +36,7 @@
     "physics_hz": 240,
     "geometry_registration": "calibrated-original-png"
   },
-  "video_rendered": false,
+  "video_rendered": true,
   "background_available": true,
   "audio": {
     "event_counts": {
