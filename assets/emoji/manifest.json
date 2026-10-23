@@ -1,0 +1,37 @@
+[
+  {
+    "file": "2b50.png",
+    "sha256": "427b7f8fbe46ce254c9950b28e5a370353c27d1f67d400c88c333a8f0ac3e599",
+    "source": "https://raw.githubusercontent.com/twitter/twemoji/v14.0.2/assets/72x72/2b50.png"
+  },
+  {
+    "file": "1f319.png",
+    "sha256": "3a9ada9e16379eb0bf8f470b439dfd62fbdffa694c18d1fc44a251a8479e768b",
+    "source": "https://raw.githubusercontent.com/twitter/twemoji/v14.0.2/assets/72x72/1f319.png"
+  },
+  {
+    "file": "1fa90.png",
+    "sha256": "6c1d46ba50949208c7c56bc3b3b2eee62b110136d78ebfec3c138508a1d7ffa3",
+    "source": "https://raw.githubusercontent.com/twitter/twemoji/v14.0.2/assets/72x72/1fa90.png"
+  },
+  {
+    "file": "1f30d.png",
+    "sha256": "dd68a90128738c1fadf97d97fd491026da34f7322ccac973a8bfb60391a2bae3",
+    "source": "https://raw.githubusercontent.com/twitter/twemoji/v14.0.2/assets/72x72/1f30d.png"
+  },
+  {
+    "file": "2600.png",
+    "sha256": "b39314735b047ac70961be0a361e4335a076cb3cc8afd22ab720ec22e88a9d0d",
+    "source": "https://raw.githubusercontent.com/twitter/twemoji/v14.0.2/assets/72x72/2600.png"
+  },
+  {
+    "file": "1f30c.png",
+    "sha256": "e88ede42695f10499f59a153effccc2f9e76e1e03c27ce65aad60fa607063ccb",
+    "source": "https://raw.githubusercontent.com/twitter/twemoji/v14.0.2/assets/72x72/1f30c.png"
+  },
+  {
+    "file": "1f680.png",
+    "sha256": "a4d8b439357e38510505048dfc85c54c9cbb08c04ef4d9d4bacd03572a17c9a5",
+    "source": "https://raw.githubusercontent.com/twitter/twemoji/v14.0.2/assets/72x72/1f680.png"
+  }
+]
