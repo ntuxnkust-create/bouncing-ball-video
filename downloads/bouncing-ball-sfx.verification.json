@@ -1,0 +1,13 @@
+{
+  "video_stream_identical_to_original": true,
+  "video_stream_hashes": {
+    "output/bouncing-ball-merge.mp4": "SHA256=54bcc5722e9709fedf11817f7d2b23aa1e4bd713506f28d6f62fcf87d732a712",
+    "output/bouncing-ball-sfx.mp4": "SHA256=54bcc5722e9709fedf11817f7d2b23aa1e4bd713506f28d6f62fcf87d732a712"
+  },
+  "aac_peak": 0.5790249705314636,
+  "aac_rms": 0.0930523235536135,
+  "clipped_samples": 0,
+  "old_media_unchanged": true,
+  "tests_passed": 19,
+  "visual_profile": "existing car-brand profile; Emoji source not present in checkout"
+}
