@@ -1,0 +1,119 @@
+test_stereo_event_crosses_block_boundary_without_clipping (test_project.AudioTests.test_stereo_event_crosses_block_boundary_without_clipping) ... ok
+test_reject_invalid_dimensions_rates_and_missing_music (test_project.ConfigurationTests.test_reject_invalid_dimensions_rates_and_missing_music) ... ok
+test_contact_merges_equal_levels_once_and_conserves_mass (test_project.PhysicsTests.test_contact_merges_equal_levels_once_and_conserves_mass) ... ok
+test_full_default_story_is_repeatable_finite_and_reaches_final (test_project.PhysicsTests.test_full_default_story_is_repeatable_finite_and_reaches_final) ... ok
+test_merge_rule_can_be_disabled (test_project.PhysicsTests.test_merge_rule_can_be_disabled) ... ok
+test_no_merge_for_unlike_levels_or_separated_balls (test_project.PhysicsTests.test_no_merge_for_unlike_levels_or_separated_balls) ... ok
+test_custom_transparent_png_is_used (test_project.PipelineTests.test_custom_transparent_png_is_used) ... ok
+test_real_streaming_h264_aac_pipeline_and_existing_output_protection (test_project.PipelineTests.test_real_streaming_h264_aac_pipeline_and_existing_output_protection) ... pygame 2.6.1 (SDL 2.28.4, Python 3.12.14)
+Hello from the pygame community. https://www.pygame.org/contribute.html
+Rendering 1/120 | 0.0s | merges=0 | level=1
+Validating complete video and audio streams…
+{
+  "output": "/tmp/tmp_m0urk33/smoke.mp4",
+  "report": "/tmp/tmp_m0urk33/smoke.report.json",
+  "simulation": {
+    "seed": 42,
+    "duration": 4.0,
+    "frames": 120,
+    "spawned": 5,
+    "merges": 0,
+    "highest_level": 4,
+    "final_form_time": null,
+    "peak_balls": 5,
+    "remaining_balls": 5,
+    "events": 21,
+    "boundary_corrections": 2,
+    "level_counts": {
+      "1": 1,
+      "2": 2,
+      "4": 2
+    }
+  },
+  "validation": {
+    "video_codec": "h264",
+    "audio_codec": "aac",
+    "width": 270,
+    "height": 480,
+    "fps": 30,
+    "frames": 120,
+    "duration": 4.0,
+    "full_decode": "passed",
+    "bytes": 246812
+  }
+}
+ok
+test_all_original_trajectory_checkpoints_and_merge_results_unchanged (test_sound_system.PhysicsAudioIntegrationTests.test_all_original_trajectory_checkpoints_and_merge_results_unchanged) ... ok
+test_wall_and_ball_events_come_from_real_contacts (test_sound_system.PhysicsAudioIntegrationTests.test_wall_and_ball_events_come_from_real_contacts) ... ok
+test_chunk_size_does_not_change_waveform (test_sound_system.SoundSystemTests.test_chunk_size_does_not_change_waveform) ... ok
+test_custom_wav_replacement_and_resampling (test_sound_system.SoundSystemTests.test_custom_wav_replacement_and_resampling) ... ok
+test_glass_and_pop_have_distinct_soft_spectra (test_sound_system.SoundSystemTests.test_glass_and_pop_have_distinct_soft_spectra) ... ok
+test_invalid_events_and_sound_settings_fail (test_sound_system.SoundSystemTests.test_invalid_events_and_sound_settings_fail) ... ok
+test_louder_impact_is_louder_and_stereo_pan_is_correct (test_sound_system.SoundSystemTests.test_louder_impact_is_louder_and_stereo_pan_is_correct) ... ok
+test_no_events_is_digital_silence_and_music_is_rejected (test_sound_system.SoundSystemTests.test_no_events_is_digital_silence_and_music_is_rejected) ... ok
+test_pair_and_global_cooldowns_never_delay_sounds (test_sound_system.SoundSystemTests.test_pair_and_global_cooldowns_never_delay_sounds) ... ok
+test_sample_accurate_onset_and_presentation_offset (test_sound_system.SoundSystemTests.test_sample_accurate_onset_and_presentation_offset) ... ok
+test_upgrade_priority_polyphony_and_no_clipping (test_sound_system.SoundSystemTests.test_upgrade_priority_polyphony_and_no_clipping) ... ok
+test_different_levels_and_final_never_merge (test_space_emoji.ContactTests.test_different_levels_and_final_never_merge) ... ok
+test_equal_contact_mass_and_pair_reuse (test_space_emoji.ContactTests.test_equal_contact_mass_and_pair_reuse) ... ok
+test_fast_impact_stays_in_glass (test_space_emoji.ContactTests.test_fast_impact_stays_in_glass) ... ok
+test_largest_feed_falls_through_open_rails (test_space_emoji.ContactTests.test_largest_feed_falls_through_open_rails) ... ok
+test_all_pngs_color_alpha_and_hashes (test_space_emoji.EmojiTests.test_all_pngs_color_alpha_and_hashes) ... ok
+test_inward_fit_respects_every_level (test_space_emoji.GeometryTests.test_inward_fit_respects_every_level) ... ok
+test_missing_original_is_explicit (test_space_emoji.GeometryTests.test_missing_original_is_explicit) ... ok
+test_open_inlet_and_clearance (test_space_emoji.GeometryTests.test_open_inlet_and_clearance) ... ok
+test_original_not_cropped_recolored_or_mutated (test_space_emoji.GeometryTests.test_original_not_cropped_recolored_or_mutated) ... ok
+test_full_900_frame_simulation_and_sound (test_space_emoji.ProductionTests.test_full_900_frame_simulation_and_sound) ... ok
+test_real_encode_decode_pipeline_fixture_not_final_artwork (test_space_emoji.ProductionTests.test_real_encode_decode_pipeline_fixture_not_final_artwork) ... Rendering 1/66: merges=0, level=1
+ok
+
+----------------------------------------------------------------------
+Ran 30 tests in 36.864s
+
+OK
+{
+  "output": "/tmp/tmpxpclzbei/codec-test.mp4",
+  "validation": {
+    "video_codec": "h264",
+    "audio_codec": "aac",
+    "width": 270,
+    "height": 480,
+    "fps": 30,
+    "frames": 66,
+    "duration": 2.2,
+    "full_decode": "passed",
+    "bytes": 70094
+  },
+  "simulation": {
+    "seed": 42,
+    "duration": 2.2,
+    "frames": 66,
+    "spawned": 4,
+    "merges": 0,
+    "highest_level": 2,
+    "final_form_time": null,
+    "peak_balls": 4,
+    "remaining_balls": 4,
+    "events": 5,
+    "boundary_corrections": 1,
+    "level_counts": {
+      "1": 2,
+      "2": 2
+    },
+    "theme": "Space Emoji Merge",
+    "levels": [
+      "Star",
+      "Moon",
+      "Saturn",
+      "Earth",
+      "Sun",
+      "Galaxy",
+      "Rocket"
+    ],
+    "max_pre_correction_wall_penetration_px": 2.5746,
+    "deferred_crowded_merges": 0,
+    "blocked_spawns": 0,
+    "physics_hz": 240,
+    "geometry_registration": "pending-original-png"
+  }
+}

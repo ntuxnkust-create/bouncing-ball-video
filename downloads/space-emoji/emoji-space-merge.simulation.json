@@ -1,0 +1,64 @@
+{
+  "simulation": {
+    "seed": 42,
+    "duration": 30.0,
+    "frames": 900,
+    "spawned": 73,
+    "merges": 38,
+    "highest_level": 7,
+    "final_form_time": 25.18749999999889,
+    "peak_balls": 36,
+    "remaining_balls": 35,
+    "events": 3778,
+    "boundary_corrections": 8,
+    "level_counts": {
+      "1": 6,
+      "2": 8,
+      "3": 10,
+      "4": 2,
+      "5": 6,
+      "6": 2,
+      "7": 1
+    },
+    "theme": "Space Emoji Merge",
+    "levels": [
+      "Star",
+      "Moon",
+      "Saturn",
+      "Earth",
+      "Sun",
+      "Galaxy",
+      "Rocket"
+    ],
+    "max_pre_correction_wall_penetration_px": 2.9978,
+    "deferred_crowded_merges": 13282,
+    "blocked_spawns": 0,
+    "physics_hz": 240,
+    "geometry_registration": "pending-original-png"
+  },
+  "video_rendered": false,
+  "background_available": false,
+  "audio": {
+    "event_counts": {
+      "wall": 67,
+      "merge": 37,
+      "ball": 324,
+      "final": 1
+    },
+    "suppressed": {
+      "upgrade_contact": 173,
+      "global_cooldown": 3176
+    },
+    "max_scheduled_voices": 7,
+    "audible_events": 429,
+    "sample_rate": 48000,
+    "channels": 2,
+    "peak": 0.517934390276311,
+    "rms": 0.08216306819531705,
+    "music": false,
+    "speech": false,
+    "presentation_offset_seconds": 0.03333333333333333,
+    "custom_sounds": [],
+    "source": "event-triggered sound effects only"
+  }
+}

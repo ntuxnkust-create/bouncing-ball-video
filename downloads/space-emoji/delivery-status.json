@@ -1,0 +1,37 @@
+{
+  "status": "blocked_missing_original_background",
+  "source_commit": "f320e7f3d27991c98af16669a0f5b58cee8d9b76",
+  "original_car_source_preserved": true,
+  "tests": {
+    "command": ".venv/bin/python -m unittest discover -s tests -v",
+    "passed": 30,
+    "failed": 0,
+    "exit_code": 0
+  },
+  "actual_30_second_physics_and_audio": "passed; see simulation and events JSON",
+  "standalone_audio": {
+    "file": "emoji-space-merge.effects.m4a",
+    "duration": 30.0,
+    "codec": "aac",
+    "sample_rate": 48000,
+    "channels": 2,
+    "full_decode": "passed"
+  },
+  "production_render_attempt": {
+    "command": ".venv/bin/python -m space_emoji",
+    "exit_code": 1,
+    "error": "Space Emoji Merge: Original glass PNG missing: /workspace/bouncing-ball-video/assets/glass-container.png. Attach the original as a downloadable file or use --background /path/to/original.png. No substitute background is generated."
+  },
+  "production_mp4": {
+    "created": false,
+    "900_frame_video_validation": "not_run",
+    "original_png_available": false,
+    "pixel_geometry_alignment": "unverified"
+  },
+  "source_zip": {
+    "file": "space-emoji-merge-source.zip",
+    "integrity": "passed",
+    "includes_original_png": false
+  },
+  "next_required_input": "Original glass PNG file or a directly downloadable original URL. The image displayed in chat is not mounted as a readable file."
+}
