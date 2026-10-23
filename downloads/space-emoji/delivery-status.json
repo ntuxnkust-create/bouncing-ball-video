@@ -1,37 +1,104 @@
 {
-  "status": "blocked_missing_original_background",
-  "source_commit": "f320e7f3d27991c98af16669a0f5b58cee8d9b76",
+  "status": "completed",
+  "source_commit": "0a0973f1c8d0a932569dfe5fe7e03c5fd753ad36",
   "original_car_source_preserved": true,
+  "existing_space_simulation_and_audio_preserved": true,
   "tests": {
     "command": ".venv/bin/python -m unittest discover -s tests -v",
-    "passed": 30,
+    "passed": 31,
     "failed": 0,
     "exit_code": 0
   },
-  "actual_30_second_physics_and_audio": "passed; see simulation and events JSON",
-  "standalone_audio": {
-    "file": "emoji-space-merge.effects.m4a",
-    "duration": 30.0,
-    "codec": "aac",
-    "sample_rate": 48000,
-    "channels": 2,
-    "full_decode": "passed"
-  },
-  "production_render_attempt": {
+  "production_render": {
     "command": ".venv/bin/python -m space_emoji",
-    "exit_code": 1,
-    "error": "Space Emoji Merge: Original glass PNG missing: /workspace/bouncing-ball-video/assets/glass-container.png. Attach the original as a downloadable file or use --background /path/to/original.png. No substitute background is generated."
+    "exit_code": 0,
+    "render_seconds": 72.57
   },
   "production_mp4": {
-    "created": false,
-    "900_frame_video_validation": "not_run",
-    "original_png_available": false,
-    "pixel_geometry_alignment": "unverified"
+    "created": true,
+    "video_codec": "h264",
+    "audio_codec": "aac",
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "frames": 900,
+    "duration": 30.0,
+    "full_decode": "passed",
+    "bytes": 6621627,
+    "original_png_available": true,
+    "pixel_geometry_alignment": "calibrated-original-png"
+  },
+  "audio": {
+    "event_counts": {
+      "wall": 57,
+      "merge": 43,
+      "ball": 335,
+      "final": 1
+    },
+    "suppressed": {
+      "upgrade_contact": 279,
+      "global_cooldown": 2987
+    },
+    "max_scheduled_voices": 8,
+    "audible_events": 436,
+    "sample_rate": 48000,
+    "channels": 2,
+    "peak": 0.6306297787793531,
+    "rms": 0.08540081623943702,
+    "music": false,
+    "speech": false,
+    "presentation_offset_seconds": 0.03333333333333333,
+    "custom_sounds": [],
+    "source": "event-triggered sound effects only"
+  },
+  "simulation": {
+    "seed": 42,
+    "duration": 30.0,
+    "frames": 900,
+    "spawned": 73,
+    "merges": 44,
+    "highest_level": 7,
+    "final_form_time": 24.974999999998904,
+    "peak_balls": 32,
+    "remaining_balls": 29,
+    "events": 3702,
+    "boundary_corrections": 3,
+    "level_counts": {
+      "1": 2,
+      "2": 6,
+      "3": 7,
+      "4": 9,
+      "5": 2,
+      "6": 2,
+      "7": 1
+    },
+    "theme": "Space Emoji Merge",
+    "levels": [
+      "Star",
+      "Moon",
+      "Saturn",
+      "Earth",
+      "Sun",
+      "Galaxy",
+      "Rocket"
+    ],
+    "max_pre_correction_wall_penetration_px": 5.0417,
+    "deferred_crowded_merges": 20366,
+    "blocked_spawns": 0,
+    "physics_hz": 240,
+    "geometry_registration": "calibrated-original-png"
+  },
+  "background": {
+    "filename": "glass-container.png",
+    "sha256": "8ac2a76661480b11df3e546e50b9867a889cd80a986ba06e67b99305ff51a8fa"
   },
   "source_zip": {
     "file": "space-emoji-merge-source.zip",
     "integrity": "passed",
-    "includes_original_png": false
+    "includes_original_png": true
   },
-  "next_required_input": "Original glass PNG file or a directly downloadable original URL. The image displayed in chat is not mounted as a readable file."
+  "sha256": {
+    "emoji-space-merge.mp4": "96ebfa3c64d60131102b6cf218ad4d4bd50b8cf3248b21a931a7fd9b1ff8d367",
+    "space-emoji-merge-source.zip": "8eb50eb6c781d9008665ae6fead55baa0bacf93f8207f3241cfa5ed7d3afc9b9"
+  }
 }

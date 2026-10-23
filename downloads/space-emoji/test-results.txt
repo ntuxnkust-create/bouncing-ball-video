@@ -10,8 +10,8 @@ Hello from the pygame community. https://www.pygame.org/contribute.html
 Rendering 1/120 | 0.0s | merges=0 | level=1
 Validating complete video and audio streams…
 {
-  "output": "/tmp/tmp_m0urk33/smoke.mp4",
-  "report": "/tmp/tmp_m0urk33/smoke.report.json",
+  "output": "/tmp/tmpp70ixj6y/smoke.mp4",
+  "report": "/tmp/tmpp70ixj6y/smoke.report.json",
   "simulation": {
     "seed": 42,
     "duration": 4.0,
@@ -59,6 +59,10 @@ test_equal_contact_mass_and_pair_reuse (test_space_emoji.ContactTests.test_equal
 test_fast_impact_stays_in_glass (test_space_emoji.ContactTests.test_fast_impact_stays_in_glass) ... ok
 test_largest_feed_falls_through_open_rails (test_space_emoji.ContactTests.test_largest_feed_falls_through_open_rails) ... ok
 test_all_pngs_color_alpha_and_hashes (test_space_emoji.EmojiTests.test_all_pngs_color_alpha_and_hashes) ... ok
+test_calibration_matches_untouched_original_png (test_space_emoji.GeometryTests.test_calibration_matches_untouched_original_png) ... /workspace/bouncing-ball-video/tests/test_space_emoji.py:27: ResourceWarning: unclosed file <_io.BufferedReader name='/workspace/bouncing-ball-video/assets/glass-container.png'>
+  self.assertEqual(list(Image.open(stored).size), spec['source_size'])
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+ok
 test_inward_fit_respects_every_level (test_space_emoji.GeometryTests.test_inward_fit_respects_every_level) ... ok
 test_missing_original_is_explicit (test_space_emoji.GeometryTests.test_missing_original_is_explicit) ... ok
 test_open_inlet_and_clearance (test_space_emoji.GeometryTests.test_open_inlet_and_clearance) ... ok
@@ -68,11 +72,11 @@ test_real_encode_decode_pipeline_fixture_not_final_artwork (test_space_emoji.Pro
 ok
 
 ----------------------------------------------------------------------
-Ran 30 tests in 36.864s
+Ran 31 tests in 56.837s
 
 OK
 {
-  "output": "/tmp/tmpxpclzbei/codec-test.mp4",
+  "output": "/tmp/tmpe9y7aahf/codec-test.mp4",
   "validation": {
     "video_codec": "h264",
     "audio_codec": "aac",
@@ -82,7 +86,7 @@ OK
     "frames": 66,
     "duration": 2.2,
     "full_decode": "passed",
-    "bytes": 70094
+    "bytes": 68739
   },
   "simulation": {
     "seed": 42,
@@ -94,8 +98,8 @@ OK
     "final_form_time": null,
     "peak_balls": 4,
     "remaining_balls": 4,
-    "events": 5,
-    "boundary_corrections": 1,
+    "events": 4,
+    "boundary_corrections": 2,
     "level_counts": {
       "1": 2,
       "2": 2
@@ -110,10 +114,10 @@ OK
       "Galaxy",
       "Rocket"
     ],
-    "max_pre_correction_wall_penetration_px": 2.5746,
+    "max_pre_correction_wall_penetration_px": 5.0417,
     "deferred_crowded_merges": 0,
     "blocked_spawns": 0,
     "physics_hz": 240,
-    "geometry_registration": "pending-original-png"
+    "geometry_registration": "calibrated-original-png"
   }
 }
