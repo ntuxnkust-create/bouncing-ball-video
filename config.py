@@ -26,18 +26,58 @@ BRANDS = (
 
 
 @dataclass(frozen=True)
+class SoundConfig:
+    """Effects-only sound design; optional replacements are 16-bit PCM WAVs."""
+    assets_dir: Path = Path("assets/sounds")
+    wall_file: str = "wall.wav"
+    ball_file: str = "ball.wav"
+    merge_file: str = "merge.wav"
+    final_file: str = "final.wav"
+    wall_gain: float = 0.30
+    ball_gain: float = 0.32
+    merge_gain: float = 0.54
+    final_gain: float = 0.67
+    master_gain: float = 1.30
+    ceiling: float = 0.86
+    minimum_impact: float = 35.0
+    full_impact: float = 600.0
+    pair_cooldown: float = 0.12
+    global_cooldown: float = 0.045
+    max_voices: int = 8
+    upgrade_duck_seconds: float = 0.24
+    collision_duck_gain: float = 0.26
+    block_frames: int = 48000
+
+    def validate(self):
+        gains = (self.wall_gain, self.ball_gain, self.merge_gain, self.final_gain,
+                 self.master_gain, self.ceiling, self.collision_duck_gain)
+        if any(not math.isfinite(v) or not 0 <= v <= 2 for v in gains):
+            raise ValueError("Sound gains must be finite and between 0 and 2")
+        if not 0 < self.ceiling <= .94 or not 0 <= self.collision_duck_gain <= 1:
+            raise ValueError("Sound ceiling must be ≤0.94 and duck gain must be ≤1")
+        if not 0 < self.minimum_impact < self.full_impact:
+            raise ValueError("Impact thresholds must satisfy 0 < minimum < full")
+        if any(not math.isfinite(v) or v < 0 for v in
+               (self.pair_cooldown, self.global_cooldown, self.upgrade_duck_seconds)):
+            raise ValueError("Sound cooldowns must be finite and nonnegative")
+        if not 1 <= self.max_voices <= 64 or not 64 <= self.block_frames <= 192000:
+            raise ValueError("Invalid sound polyphony or block size")
+
+
+@dataclass(frozen=True)
 class Config:
     width: int = 1080
     height: int = 1920
     fps: int = 30
     duration: float = 60.0
     seed: int = 42
-    output: Path = Path("output/bouncing-ball-merge.mp4")
+    output: Path = Path("output/bouncing-ball-sfx.mp4")
     logos_dir: Path = Path("assets/logos")
     music: Path | None = None
     music_gain: float = 0.18
-    # Original, locally synthesized score; no downloaded music or samples.
-    score: bool = True
+    # Retained for old callers; music and score are rejected in effects-only mode.
+    score: bool = False
+    sound: SoundConfig = field(default_factory=SoundConfig)
     title: str = "Will They Merge Into The Final Form?"
     gravity: float = 1180.0
     elasticity: float = 0.48
@@ -65,6 +105,11 @@ class Config:
         return round(self.duration * self.fps)
 
     def validate(self) -> None:
+        self.sound.validate()
+        if self.score or self.music is not None:
+            raise ValueError("Effects-only mode: background music and voices are not supported")
+        if self.audio_rate not in (44100, 48000):
+            raise ValueError("Audio sample rate must be 44100 or 48000 Hz")
         if self.width < 270 or self.height < 480 or self.width % 2 or self.height % 2:
             raise ValueError("Video dimensions must be even and at least 270 × 480")
         if self.width * 16 != self.height * 9:

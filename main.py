@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Run `python main.py` for the full 60-second vertical MP4."""
+"""Render a 60-second vertical MP4 with event-triggered sound effects only."""
 import argparse
 from dataclasses import replace
 import json
@@ -24,9 +24,9 @@ def parse_args():
     parser.add_argument("--height", type=int, default=Config.height)
     parser.add_argument("--seed", type=int, default=Config.seed)
     parser.add_argument("--logos-dir", type=Path, default=Config.logos_dir)
-    parser.add_argument("--music", type=Path, help="Optional music file you have rights to use")
-    parser.add_argument("--music-gain", type=float, default=Config.music_gain)
-    parser.add_argument("--no-score", action="store_true", help="Effects only; disable original background score")
+    parser.add_argument("--sounds-dir", type=Path, default=Config().sound.assets_dir,
+                        help="Optional wall/ball/merge/final PCM WAV replacements")
+    parser.add_argument("--no-score", action="store_true", help=argparse.SUPPRESS)
     parser.add_argument("--crf", type=int, default=Config.crf)
     parser.add_argument("--preset", choices=("ultrafast", "veryfast", "fast", "medium", "slow"), default=Config.preset)
     parser.add_argument("--overwrite", action="store_true")
@@ -37,7 +37,8 @@ def parse_args():
 def main():
     args = parse_args()
     cfg = replace(Config(), **{k: v for k, v in vars(args).items()
-                               if k not in {"no_score", "overwrite", "simulate_only"}}, score=not args.no_score)
+                               if k not in {"no_score", "overwrite", "simulate_only", "sounds_dir"}},
+                  sound=replace(Config().sound, assets_dir=args.sounds_dir), score=False)
     try:
         cfg.validate()
         if args.simulate_only:

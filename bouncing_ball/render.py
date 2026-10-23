@@ -62,23 +62,16 @@ def render(cfg: Config, overwrite=False):
                     log.seek(0)
                     raise RuntimeError(f"FFmpeg encoder pipe failed: {log.read()[-4000:]}") from exc
                 raise
-        audio_stats = synthesize(cfg, sim.events, wav)
+        # Each frame presents the just-completed physics state at its start PTS.
+        # Compensate this one-frame presentation offset, without quantizing events.
+        audio_stats = synthesize(cfg, sim.events, wav, presentation_offset=1/cfg.fps)
         command = ["ffmpeg", "-hide_banner", "-loglevel", "error", "-y",
                    "-i", str(silent), "-i", str(wav)]
-        if cfg.music:
-            # User-supplied music is looped, faded, and limited alongside effects.
-            duration = cfg.frames/cfg.fps
-            command += ["-stream_loop", "-1", "-i", str(cfg.music), "-filter_complex",
-                        f"[2:a]volume={cfg.music_gain},afade=t=in:d=1,"
-                        f"afade=t=out:st={max(0,duration-2)}:d=2[m];"
-                        "[1:a][m]amix=inputs=2:duration=first:normalize=0,alimiter=limit=0.94[a]",
-                        "-map", "0:v:0", "-map", "[a]"]
-        else:
-            command += ["-map", "0:v:0", "-map", "1:a:0"]
+        command += ["-map", "0:v:0", "-map", "1:a:0"]
         command += ["-c:v", "copy", "-c:a", "aac", "-b:a", "192k", "-ar", str(cfg.audio_rate),
                     "-ac", "2", "-t", str(cfg.frames/cfg.fps), "-movflags", "+faststart",
                     "-metadata", "title=Bouncing Ball Merge — The Final Form",
-                    "-metadata", "comment=Original procedural visuals and synthesized audio", str(complete)]
+                    "-metadata", "comment=Event-synchronized sound effects only; no music or speech", str(complete)]
         subprocess.run(command, check=True)
         print("Validating complete video and audio streams…", flush=True)
         validation = verify_video(complete, cfg.width, cfg.height, cfg.fps, cfg.frames)
