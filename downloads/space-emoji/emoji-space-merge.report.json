@@ -4,21 +4,21 @@
     "duration": 30.0,
     "frames": 900,
     "spawned": 73,
-    "merges": 44,
+    "merges": 51,
     "highest_level": 7,
-    "final_form_time": 24.974999999998904,
-    "peak_balls": 32,
-    "remaining_balls": 29,
-    "events": 3702,
-    "boundary_corrections": 3,
+    "final_form_time": 24.55833333333226,
+    "peak_balls": 25,
+    "remaining_balls": 22,
+    "events": 2581,
+    "boundary_corrections": 4,
     "level_counts": {
-      "1": 2,
-      "2": 6,
-      "3": 7,
-      "4": 9,
+      "1": 4,
+      "2": 5,
+      "3": 4,
+      "4": 3,
       "5": 2,
-      "6": 2,
-      "7": 1
+      "6": 1,
+      "7": 3
     },
     "theme": "Space Emoji Merge",
     "levels": [
@@ -31,28 +31,30 @@
       "Rocket"
     ],
     "max_pre_correction_wall_penetration_px": 5.0417,
-    "deferred_crowded_merges": 20366,
+    "deferred_crowded_merges": 0,
+    "merge_separation_passes": 1345,
+    "max_merge_residual_overlap_px": 0.1281,
     "blocked_spawns": 0,
     "physics_hz": 240,
     "geometry_registration": "calibrated-original-png"
   },
   "audio": {
     "event_counts": {
-      "wall": 57,
-      "merge": 43,
-      "ball": 335,
-      "final": 1
+      "wall": 98,
+      "merge": 48,
+      "ball": 248,
+      "final": 3
     },
     "suppressed": {
-      "upgrade_contact": 279,
-      "global_cooldown": 2987
+      "upgrade_contact": 298,
+      "global_cooldown": 1886
     },
     "max_scheduled_voices": 8,
-    "audible_events": 436,
+    "audible_events": 397,
     "sample_rate": 48000,
     "channels": 2,
-    "peak": 0.6306297787793531,
-    "rms": 0.08540081623943702,
+    "peak": 0.6761244021191228,
+    "rms": 0.09243406875336084,
     "music": false,
     "speech": false,
     "presentation_offset_seconds": 0.03333333333333333,
@@ -68,7 +70,7 @@
     "frames": 900,
     "duration": 30.0,
     "full_decode": "passed",
-    "bytes": 6621627
+    "bytes": 6352992
   },
   "background": {
     "filename": "glass-container.png",
@@ -80,7 +82,7 @@
     "fps": 30,
     "duration": 30,
     "seed": 42,
-    "output": "/workspace/bouncing-ball-video/outputs/emoji-space-merge.mp4",
+    "output": "outputs/emoji-space-merge-fixed-final.mp4",
     "logos_dir": "/workspace/bouncing-ball-video/assets/emoji",
     "music": null,
     "music_gain": 0.18,
@@ -124,7 +126,7 @@
     "late_pairing_bias": 0.72,
     "max_balls": 48,
     "merge_equal_levels": true,
-    "merge_grace": 0.1,
+    "merge_grace": 0.0,
     "crf": 18,
     "preset": "fast",
     "encoder_threads": 4,
@@ -211,5 +213,5 @@
     "background": "/workspace/bouncing-ball-video/assets/glass-container.png",
     "geometry": "/workspace/bouncing-ball-video/assets/glass-container.geometry.json"
   },
-  "render_seconds": 72.57
+  "render_seconds": 55.53
 }

@@ -10,8 +10,8 @@ Hello from the pygame community. https://www.pygame.org/contribute.html
 Rendering 1/120 | 0.0s | merges=0 | level=1
 Validating complete video and audio streams…
 {
-  "output": "/tmp/tmpp70ixj6y/smoke.mp4",
-  "report": "/tmp/tmpp70ixj6y/smoke.report.json",
+  "output": "/tmp/tmpciri7t2k/smoke.mp4",
+  "report": "/tmp/tmpciri7t2k/smoke.report.json",
   "simulation": {
     "seed": 42,
     "duration": 4.0,
@@ -54,15 +54,16 @@ test_no_events_is_digital_silence_and_music_is_rejected (test_sound_system.Sound
 test_pair_and_global_cooldowns_never_delay_sounds (test_sound_system.SoundSystemTests.test_pair_and_global_cooldowns_never_delay_sounds) ... ok
 test_sample_accurate_onset_and_presentation_offset (test_sound_system.SoundSystemTests.test_sample_accurate_onset_and_presentation_offset) ... ok
 test_upgrade_priority_polyphony_and_no_clipping (test_sound_system.SoundSystemTests.test_upgrade_priority_polyphony_and_no_clipping) ... ok
+test_crowded_earth_contact_upgrades_without_waiting_for_space (test_space_emoji.ContactTests.test_crowded_earth_contact_upgrades_without_waiting_for_space) ... ok
+test_crowded_upgrade_against_glass_keeps_neighbors_inside (test_space_emoji.ContactTests.test_crowded_upgrade_against_glass_keeps_neighbors_inside) ... ok
 test_different_levels_and_final_never_merge (test_space_emoji.ContactTests.test_different_levels_and_final_never_merge) ... ok
 test_equal_contact_mass_and_pair_reuse (test_space_emoji.ContactTests.test_equal_contact_mass_and_pair_reuse) ... ok
 test_fast_impact_stays_in_glass (test_space_emoji.ContactTests.test_fast_impact_stays_in_glass) ... ok
 test_largest_feed_falls_through_open_rails (test_space_emoji.ContactTests.test_largest_feed_falls_through_open_rails) ... ok
+test_newly_born_equal_contact_is_not_ignored (test_space_emoji.ContactTests.test_newly_born_equal_contact_is_not_ignored) ... ok
 test_all_pngs_color_alpha_and_hashes (test_space_emoji.EmojiTests.test_all_pngs_color_alpha_and_hashes) ... ok
-test_calibration_matches_untouched_original_png (test_space_emoji.GeometryTests.test_calibration_matches_untouched_original_png) ... /workspace/bouncing-ball-video/tests/test_space_emoji.py:27: ResourceWarning: unclosed file <_io.BufferedReader name='/workspace/bouncing-ball-video/assets/glass-container.png'>
-  self.assertEqual(list(Image.open(stored).size), spec['source_size'])
-ResourceWarning: Enable tracemalloc to get the object allocation traceback
-ok
+test_visible_emoji_silhouettes_fit_their_rotating_collision_disks (test_space_emoji.EmojiTests.test_visible_emoji_silhouettes_fit_their_rotating_collision_disks) ... ok
+test_calibration_matches_untouched_original_png (test_space_emoji.GeometryTests.test_calibration_matches_untouched_original_png) ... ok
 test_inward_fit_respects_every_level (test_space_emoji.GeometryTests.test_inward_fit_respects_every_level) ... ok
 test_missing_original_is_explicit (test_space_emoji.GeometryTests.test_missing_original_is_explicit) ... ok
 test_open_inlet_and_clearance (test_space_emoji.GeometryTests.test_open_inlet_and_clearance) ... ok
@@ -72,11 +73,11 @@ test_real_encode_decode_pipeline_fixture_not_final_artwork (test_space_emoji.Pro
 ok
 
 ----------------------------------------------------------------------
-Ran 31 tests in 56.837s
+Ran 35 tests in 49.250s
 
 OK
 {
-  "output": "/tmp/tmpe9y7aahf/codec-test.mp4",
+  "output": "/tmp/tmpz30j8yb_/codec-test.mp4",
   "validation": {
     "video_codec": "h264",
     "audio_codec": "aac",
@@ -86,7 +87,7 @@ OK
     "frames": 66,
     "duration": 2.2,
     "full_decode": "passed",
-    "bytes": 68739
+    "bytes": 62628
   },
   "simulation": {
     "seed": 42,
@@ -116,6 +117,8 @@ OK
     ],
     "max_pre_correction_wall_penetration_px": 5.0417,
     "deferred_crowded_merges": 0,
+    "merge_separation_passes": 0,
+    "max_merge_residual_overlap_px": 0.0,
     "blocked_spawns": 0,
     "physics_hz": 240,
     "geometry_registration": "calibrated-original-png"
