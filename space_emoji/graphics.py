@@ -19,7 +19,16 @@ class SpaceRenderer:
                 raise FileNotFoundError(f'Missing full-color emoji: {path}; run scripts/fetch_space_emoji.py')
             with Image.open(path) as original:
                 sprite = original.convert('RGBA')
-            diameter = round(emoji.radius*1.88)
+            # Square Galaxy and diagonal Rocket/Moon silhouettes can extend
+            # beyond a circle even if their width is below its diameter. Fit
+            # the actual alpha silhouette, so visible contact matches physics.
+            alpha = sprite.getchannel('A')
+            cx, cy = (sprite.width-1)/2, (sprite.height-1)/2
+            extent = max(math.hypot(x-cx, y-cy)
+                         for y in range(sprite.height) for x in range(sprite.width)
+                         if alpha.getpixel((x, y)) > 16)
+            diameter = min(round(emoji.radius*1.88),
+                           math.floor(sprite.width*emoji.radius*.94/extent))
             sprite.thumbnail((diameter, diameter), Image.Resampling.LANCZOS)
             # thumbnail never upscales; explicitly resize the consistent square assets.
             sprite = sprite.resize((diameter, diameter), Image.Resampling.LANCZOS)

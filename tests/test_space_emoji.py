@@ -24,7 +24,8 @@ class GeometryTests(unittest.TestCase):
         stored = SpaceConfig.background
         self.assertEqual(original.read_bytes(), stored.read_bytes())
         self.assertEqual(hashlib.sha256(stored.read_bytes()).hexdigest(), spec['source_sha256'])
-        self.assertEqual(list(Image.open(stored).size), spec['source_size'])
+        with Image.open(stored) as image:
+            self.assertEqual(list(image.size), spec['source_size'])
         self.assertEqual(spec['reference_registration'], 'calibrated-original-png')
 
     def test_open_inlet_and_clearance(self):
@@ -64,6 +65,18 @@ class GeometryTests(unittest.TestCase):
 
 
 class EmojiTests(unittest.TestCase):
+    def test_visible_emoji_silhouettes_fit_their_rotating_collision_disks(self):
+        from space_emoji.graphics import SpaceRenderer
+        renderer = SpaceRenderer(SpaceConfig())
+        for level, emoji in enumerate(SpaceConfig.brands):
+            for angle in (0, 37, 90, 145):
+                texture = renderer.rotated(level, angle)
+                pixels = np.asarray(texture)
+                yy, xx = np.nonzero(pixels[:, :, 3] > 240)
+                distances = np.hypot(xx-(texture.width-1)/2, yy-(texture.height-1)/2)
+                self.assertLessEqual(float(distances.max()), emoji.radius,
+                                     f'{emoji.name} visibly extends outside its collider at {angle}°')
+
     def test_all_pngs_color_alpha_and_hashes(self):
         records = json.loads((ROOT/'assets/emoji/manifest.json').read_text())
         self.assertEqual(len(records),7)
@@ -96,6 +109,55 @@ class ContactTests(unittest.TestCase):
         self.assertEqual(sim.merge_pairs, [(1,2)])
         self.assertGreaterEqual(sim.geometry.clearance(ball.body.position), ball.shape.radius-1)
 
+    def test_crowded_earth_contact_upgrades_without_waiting_for_space(self):
+        sim = self.make()
+        sim.space.gravity = (0, 0)
+        sim.time = 1
+        # Both Earth disks are clear of the Star, but the larger Sun at their
+        # midpoint initially needs 12 px of the Star's space. This used to veto
+        # the Earth/Earth contact indefinitely.
+        for position in ((500, 1200), (628, 1200)):
+            ball = sim.add_ball(3, position)
+            ball.born = 0
+        star = sim.add_ball(0, (564, 1100))
+        sim.step_frame()
+        self.assertEqual(sorted(b.level for b in sim.balls.values()), [0, 4])
+        self.assertEqual(sim.merges, 1)
+        self.assertEqual(sim.merge_pairs, [(1, 2)])
+        self.assertEqual(sum(b.body.mass for b in sim.balls.values()), 17)
+        sun = next(b for b in sim.balls.values() if b.level == 4)
+        self.assertGreaterEqual((sun.body.position-star.body.position).length,
+                                sun.shape.radius+star.shape.radius-.15)
+        self.assertLess(sun.body.velocity.length, .01)
+        self.assertLess(star.body.velocity.length, .01)
+        upgrade = next(e for e in sim.events if e.kind == 'merge')
+        self.assertEqual(upgrade.level, 4)
+        self.assertAlmostEqual(upgrade.time, 1+1/sim.cfg.physics_hz)
+
+    def test_newly_born_equal_contact_is_not_ignored(self):
+        sim = self.make()
+        sim.space.gravity = (0, 0)
+        sim.add_ball(3, (500, 1200))
+        sim.add_ball(3, (628, 1200))
+        sim.step_frame()
+        self.assertEqual(sim.merges, 1)
+        self.assertEqual(next(iter(sim.balls.values())).level, 4)
+
+    def test_crowded_upgrade_against_glass_keeps_neighbors_inside(self):
+        sim = self.make()
+        sim.space.gravity = (0, 0)
+        for position in ((450, 1450), (578, 1450)):
+            sim.add_ball(3, position)
+        sim.add_ball(2, (514, 1331))
+        for _ in range(6):
+            sim.step_frame()
+            for ball in sim.balls.values():
+                self.assertGreaterEqual(sim.geometry.clearance(ball.body.position),
+                                        ball.shape.radius-.2)
+                self.assertLess(ball.body.velocity.length, 10)
+        self.assertEqual(sorted(b.level for b in sim.balls.values()), [2, 4])
+        self.assertLess(sim.max_merge_residual_overlap, .2)
+
     def test_different_levels_and_final_never_merge(self):
         for levels, distance in [((0,1),77), ((6,6),203)]:
             sim = self.make()
@@ -124,7 +186,17 @@ class ContactTests(unittest.TestCase):
 class ProductionTests(unittest.TestCase):
     def test_full_900_frame_simulation_and_sound(self):
         cfg = SpaceConfig()
-        sim = SpaceSimulation(cfg)
+        check = self
+
+        class AuditedSimulation(SpaceSimulation):
+            def _merge(self):
+                contacts = tuple(self.pending)
+                super()._merge()
+                for aid, bid in contacts:
+                    check.assertFalse(aid in self.balls and bid in self.balls,
+                                      f'Equal contact {aid}/{bid} left unmerged at {self.time}')
+
+        sim = AuditedSimulation(cfg)
         for _ in range(cfg.frames):
             sim.step_frame()
             for ball in sim.balls.values():
@@ -135,6 +207,8 @@ class ProductionTests(unittest.TestCase):
         self.assertIsNotNone(sim.first_final)
         self.assertGreater(sim.merges,25)
         self.assertGreater(sim.spawned,60)
+        self.assertEqual(sim.deferred_merges, 0)
+        self.assertLess(sim.max_merge_residual_overlap, .5)
         used = [ball_id for pair in sim.merge_pairs for ball_id in pair]
         self.assertEqual(len(used),len(set(used)))
         kinds = {e.kind for e in sim.events}

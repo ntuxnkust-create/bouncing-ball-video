@@ -32,7 +32,9 @@ class SpaceConfig(Config):
     friction: float = 0.43
     spawn_interval: float = 0.40
     max_balls: int = 48
-    merge_grace: float = 0.10
+    # Every actual equal-level contact is eligible, including a newborn upgrade.
+    # Per-step ID consumption prevents duplicate merges without ignoring impacts.
+    merge_grace: float = 0.0
     sound: SoundConfig = field(default_factory=lambda: SoundConfig(
         # Keep original synthesized effects, with no external sound overrides.
         assets_dir=ROOT / 'assets/space-sounds', max_voices=8,
